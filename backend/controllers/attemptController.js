@@ -179,9 +179,37 @@ const getAttemptResult = async (req, res) => {
   }
 };
 
+const getExamAttemptsForAdmin = async (req, res) => {
+  try {
+    const attempts = await Attempt.find({
+      exam: req.params.examId,
+      submittedAt: { $ne: null },
+    })
+      .populate('student', 'name email')
+      .populate('exam', 'title')
+      .sort({ score: -1, submittedAt: 1 });
+
+    const results = attempts.map(att => ({
+      _id: att._id,
+      studentName: att.student?.name || 'Unknown Student',
+      studentEmail: att.student?.email || 'No email',
+      examTitle: att.exam?.title || 'Unknown Exam',
+      score: att.score,
+      totalQuestions: att.totalQuestions,
+      percentage: att.totalQuestions > 0 ? Math.round((att.score / att.totalQuestions) * 10000) / 100 : 0,
+      submittedAt: att.submittedAt,
+    }));
+
+    res.json(results);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   startAttempt,
   submitAttempt,
   myAttempts,
   getAttemptResult,
+  getExamAttemptsForAdmin,
 };

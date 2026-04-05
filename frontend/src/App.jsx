@@ -12,6 +12,7 @@ import CreateExam from './pages/CreateExam.jsx';
 import ExamQuestions from './pages/ExamQuestions.jsx';
 import TakeExam from './pages/TakeExam.jsx';
 import ExamResult from './pages/ExamResult.jsx';
+import AdminExamResults from './pages/AdminExamResults.jsx';
 
 export default function App() {
   return (
@@ -86,6 +87,14 @@ export default function App() {
             element={
               <PrivateRoute role="admin">
                 <ExamQuestions />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/exams/:examId/results"
+            element={
+              <PrivateRoute role="admin">
+                <AdminExamResults />
               </PrivateRoute>
             }
           />

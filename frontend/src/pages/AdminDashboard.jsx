@@ -77,6 +77,9 @@ export default function AdminDashboard() {
                 </span>
               </div>
               <div className="actions-row" style={{ marginTop: '0.35rem' }}>
+                <Link to={`/admin/exams/${exam._id}/results`} className="btn secondary btn--sm">
+                  Results
+                </Link>
                 <Link to={`/admin/exams/${exam._id}/questions`} className="btn secondary btn--sm">
                   Questions
                 </Link>
