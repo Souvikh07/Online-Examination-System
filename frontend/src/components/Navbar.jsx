@@ -6,10 +6,8 @@ export default function Navbar() {
 
   return (
     <header className="nav">
-      <Link to="/" className="nav-brand">
-        <span className="nav-brand__mark" aria-hidden>
-          ✓
-        </span>
+      <Link to="/" className="nav-brand" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <img src="/favicon.png" alt="ExamPortal Logo" style={{ width: '30px', height: '30px', borderRadius: '6px' }} />
         <span>ExamPortal</span>
       </Link>
       <nav className="nav-links" aria-label="Main">
