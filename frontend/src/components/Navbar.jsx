@@ -6,9 +6,9 @@ export default function Navbar() {
 
   return (
     <header className="nav">
-      <Link to="/" className="nav-brand" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <img src="/favicon.png" alt="ExamPortal Logo" style={{ width: '30px', height: '30px', borderRadius: '6px' }} />
-        <span>ExamPortal</span>
+      <Link to="/" className="nav-brand">
+        <img src="/favicon.png" alt="EvoTest Logo" style={{ width: '34px', height: '34px', borderRadius: '10px', boxShadow: '0 2px 12px rgba(99,102,241,0.5)' }} />
+        <span className="nav-brand__text">EvoTest</span>
       </Link>
       <nav className="nav-links" aria-label="Main">
         {!user && (
