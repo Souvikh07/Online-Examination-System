@@ -34,7 +34,6 @@ online-exam-system/
 ```bash
 cd backend
 npm install
-copy .env.example .env
 ```
 
 Edit `.env`: set `MONGO_URI`, `JWT_SECRET`, and optionally `CLIENT_URL`.
