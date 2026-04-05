@@ -23,6 +23,9 @@ export default function Home() {
               </Link>
             </div>
           </div>
+          <div className="hero__image-wrapper">
+            <img src="/hero.png" alt="Futuristic Examination Platform" />
+          </div>
         </div>
       </section>
 
