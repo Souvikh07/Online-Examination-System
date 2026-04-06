@@ -35,9 +35,6 @@ online-exam-system/
 cd backend
 npm install
 ```
-
-Edit `.env`: set `MONGO_URI`, `JWT_SECRET`, and optionally `CLIENT_URL`.
-
 Create an admin user:
 
 ```bash
