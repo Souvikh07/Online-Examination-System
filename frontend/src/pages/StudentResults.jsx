@@ -35,10 +35,12 @@ export default function StudentResults() {
 
   return (
     <div className="container">
-      <header className="page-header">
-        <h1>My results</h1>
-        <p className="page-header__subtitle">Scores from exams you have already submitted.</p>
-      </header>
+      <div className="page-hero">
+        <header className="page-header">
+          <h1>My results</h1>
+          <p className="page-header__subtitle">Scores from exams you have already submitted.</p>
+        </header>
+      </div>
       {error && <p className="error">{error}</p>}
       {!attempts.length && !error && (
         <div className="empty-state">

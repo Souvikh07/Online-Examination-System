@@ -1,5 +1,13 @@
 import { Link } from 'react-router-dom';
 
+const SUBJECTS = [
+  { name: 'Mathematics', className: 'subject-chip--math' },
+  { name: 'Science', className: 'subject-chip--science' },
+  { name: 'English', className: 'subject-chip--english' },
+  { name: 'History', className: 'subject-chip--history' },
+  { name: 'Computer Science', className: 'subject-chip--cs' },
+];
+
 export default function Home() {
   return (
     <>
@@ -33,6 +41,15 @@ export default function Home() {
           </div>
         </section>
 
+        <div className="subjects-strip" aria-label="Available subjects">
+          {SUBJECTS.map((s) => (
+            <span key={s.name} className={`subject-chip ${s.className}`}>
+              <span className="subject-chip__dot" aria-hidden />
+              {s.name}
+            </span>
+          ))}
+        </div>
+
         <div className="hero-stats">
           <div className="hero-stat">
             <span className="hero-stat__value">5</span>
@@ -51,6 +68,10 @@ export default function Home() {
 
       <div className="content-panel">
         <div className="container">
+          <div className="section-heading">
+            <h2>Everything you need to run fair exams</h2>
+            <p>Secure, fast, and built for modern classrooms.</p>
+          </div>
           <div className="feature-grid">
             <div className="feature-card">
               <div className="feature-icon" aria-hidden>

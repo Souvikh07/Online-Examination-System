@@ -44,10 +44,12 @@ export default function ExamResult() {
 
   return (
     <div className="container">
-      <header className="page-header">
-        <h1>{data.examTitle}</h1>
-        <p className="page-header__subtitle">Here is how you did—review each item below.</p>
-      </header>
+      <div className="page-hero">
+        <header className="page-header">
+          <h1>{data.examTitle}</h1>
+          <p className="page-header__subtitle">Here is how you did—review each item below.</p>
+        </header>
+      </div>
 
       <div className="score-banner">
         <p className="score-banner__value">

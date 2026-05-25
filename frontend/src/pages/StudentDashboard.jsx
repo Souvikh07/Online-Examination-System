@@ -35,10 +35,12 @@ export default function StudentDashboard() {
 
   return (
     <div className="container">
-      <header className="page-header">
-        <h1>Available exams</h1>
-        <p className="page-header__subtitle">Choose a published subject exam to begin. Good luck.</p>
-      </header>
+      <div className="page-hero">
+        <header className="page-header">
+          <h1>Available exams</h1>
+          <p className="page-header__subtitle">Choose a published subject exam to begin. Good luck.</p>
+        </header>
+      </div>
       {error && <p className="error">{error}</p>}
       {!exams.length && !error && (
         <div className="empty-state">

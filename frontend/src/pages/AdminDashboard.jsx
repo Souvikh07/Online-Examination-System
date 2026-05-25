@@ -45,14 +45,16 @@ export default function AdminDashboard() {
 
   return (
     <div className="container">
-      <div className="admin-toolbar">
-        <header className="page-header" style={{ marginBottom: 0 }}>
-          <h1>Your exams</h1>
-          <p className="page-header__subtitle">Create tests, add MCQs, then publish when students should see them.</p>
-        </header>
-        <Link to="/admin/exams/new" className="btn">
-          + New exam
-        </Link>
+      <div className="page-hero">
+        <div className="admin-toolbar" style={{ marginBottom: 0, paddingBottom: 0, borderBottom: 'none' }}>
+          <header className="page-header" style={{ marginBottom: 0 }}>
+            <h1>Your exams</h1>
+            <p className="page-header__subtitle">Create tests, add MCQs, then publish when students should see them.</p>
+          </header>
+          <Link to="/admin/exams/new" className="btn">
+            + New exam
+          </Link>
+        </div>
       </div>
       {error && <p className="error">{error}</p>}
       {!exams.length && !error && (
