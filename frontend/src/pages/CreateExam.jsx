@@ -81,9 +81,10 @@ export default function CreateExam() {
               required
             />
           </div>
-          <div className="field">
-            <label>
+          <div className="field field--checkbox">
+            <label htmlFor="published">
               <input
+                id="published"
                 type="checkbox"
                 checked={isPublished}
                 onChange={(e) => setIsPublished(e.target.checked)}

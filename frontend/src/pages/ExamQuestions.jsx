@@ -162,14 +162,17 @@ export default function ExamQuestions() {
           <p className="q-title" style={{ marginBottom: '0.75rem' }}>
             {q.questionText}
           </p>
-          <ol style={{ margin: '0 0 1rem', paddingLeft: '1.25rem', color: 'var(--color-text-muted)' }}>
+          <ul className="review-list" style={{ marginBottom: '1rem' }}>
             {q.options.map((o, i) => (
-              <li key={i} style={{ marginBottom: '0.25rem', color: i === q.correctOptionIndex ? 'var(--color-success)' : undefined, fontWeight: i === q.correctOptionIndex ? 600 : 400 }}>
+              <li
+                key={i}
+                className={i === q.correctOptionIndex ? 'is-correct' : ''}
+              >
                 {o}
-                {i === q.correctOptionIndex ? ' ✓' : ''}
+                {i === q.correctOptionIndex ? ' — correct answer' : ''}
               </li>
             ))}
-          </ol>
+          </ul>
           <button type="button" className="btn danger btn--sm" onClick={() => del(q._id)}>
             Delete question
           </button>

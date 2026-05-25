@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api/client.js';
+import { subjectClass, subjectIcon } from '../utils/subjectStyle.js';
 
 export default function StudentResults() {
   const [attempts, setAttempts] = useState([]);
@@ -41,19 +42,30 @@ export default function StudentResults() {
       {error && <p className="error">{error}</p>}
       {!attempts.length && !error && (
         <div className="empty-state">
+          <div className="empty-state__icon" aria-hidden>
+            📊
+          </div>
           <p className="mb-0">No completed exams yet. Finish a test to see it here.</p>
         </div>
       )}
       <div className="exam-grid">
         {attempts.map((a) => (
-          <article key={a._id} className="exam-card">
-            <h2>{a.exam?.title || 'Exam'}</h2>
-            <p className="exam-card__desc text-muted">
-              {a.submittedAt ? new Date(a.submittedAt).toLocaleString() : ''}
-            </p>
-            <p style={{ fontSize: '1.1rem', fontWeight: 700, margin: '0.25rem 0 0' }}>
-              {a.score} / {a.totalQuestions}
-            </p>
+          <article
+            key={a._id}
+            className={`exam-card ${subjectClass(a.exam?.title)}`}
+          >
+            <div className="exam-card__body">
+              <div className="exam-card__icon" aria-hidden>
+                {subjectIcon(a.exam?.title)}
+              </div>
+              <h2>{a.exam?.title || 'Exam'}</h2>
+              <p className="exam-card__desc text-muted">
+                {a.submittedAt ? new Date(a.submittedAt).toLocaleString() : ''}
+              </p>
+              <p className="exam-card__score">
+                {a.score} / {a.totalQuestions}
+              </p>
+            </div>
             <div className="exam-card__footer">
               <Link to={`/student/result/${a._id}`} className="btn secondary">
                 View breakdown

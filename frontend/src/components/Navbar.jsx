@@ -7,7 +7,7 @@ export default function Navbar() {
   return (
     <header className="nav">
       <Link to="/" className="nav-brand">
-        <img src="/favicon.png" alt="EvoTest Logo" style={{ width: '34px', height: '34px', borderRadius: '10px', boxShadow: '0 2px 12px rgba(99,102,241,0.5)' }} />
+        <img src="/favicon.png" alt="" className="nav-brand__mark" width={40} height={40} />
         <span className="nav-brand__text">EvoTest</span>
       </Link>
       <nav className="nav-links" aria-label="Main">

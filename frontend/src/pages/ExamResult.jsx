@@ -60,9 +60,10 @@ export default function ExamResult() {
 
       <h2 className="section-title">Question review</h2>
       {data.details.map((row, i) => (
-        <div key={i} className="card card--flat question-block">
+        <div key={i} className="question-block">
           <p className="q-title">
-            {i + 1}. {row.questionText}
+            <span className="q-num">{i + 1}</span>
+            {row.questionText}
           </p>
           <ul className="review-list">
             {row.options.map((o, j) => {

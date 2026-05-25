@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api/client.js';
+import { subjectClass, subjectIcon } from '../utils/subjectStyle.js';
 
 export default function AdminDashboard() {
   const [exams, setExams] = useState([]);
@@ -56,27 +57,30 @@ export default function AdminDashboard() {
       {error && <p className="error">{error}</p>}
       {!exams.length && !error && (
         <div className="empty-state">
+          <div className="empty-state__icon" aria-hidden>
+            ✏️
+          </div>
           <p className="mb-0">No exams yet. Create your first one to add questions.</p>
         </div>
       )}
       <div className="exam-grid">
         {exams.map((exam) => (
-          <article key={exam._id} className="exam-card">
-            <div>
+          <article key={exam._id} className={`exam-card ${subjectClass(exam.title)}`}>
+            <div className="exam-card__body">
+              <div className="exam-card__icon" aria-hidden>
+                {subjectIcon(exam.title)}
+              </div>
               <h2>{exam.title}</h2>
               <p className="exam-card__desc">{exam.description || 'No description.'}</p>
             </div>
-            <div className="exam-card__footer" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
+            <div className="exam-card__footer exam-card__footer--stacked">
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                 <span className="meta-pill">⏱ {exam.durationMinutes} min</span>
-                <span
-                  className={`badge ${exam.isPublished ? 'badge--success' : 'badge--muted'}`}
-                  style={{ textTransform: 'none', fontSize: '0.75rem', letterSpacing: '0.02em' }}
-                >
+                <span className={`badge ${exam.isPublished ? 'badge--success' : 'badge--muted'}`}>
                   {exam.isPublished ? 'Published' : 'Draft'}
                 </span>
               </div>
-              <div className="actions-row" style={{ marginTop: '0.35rem' }}>
+              <div className="actions-row">
                 <Link to={`/admin/exams/${exam._id}/results`} className="btn secondary btn--sm">
                   Results
                 </Link>

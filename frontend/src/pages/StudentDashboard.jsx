@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api/client.js';
+import { subjectClass, subjectIcon } from '../utils/subjectStyle.js';
 
 export default function StudentDashboard() {
   const [exams, setExams] = useState([]);
@@ -36,19 +37,27 @@ export default function StudentDashboard() {
     <div className="container">
       <header className="page-header">
         <h1>Available exams</h1>
-        <p className="page-header__subtitle">Choose a published exam to begin. Good luck.</p>
+        <p className="page-header__subtitle">Choose a published subject exam to begin. Good luck.</p>
       </header>
       {error && <p className="error">{error}</p>}
       {!exams.length && !error && (
         <div className="empty-state">
+          <div className="empty-state__icon" aria-hidden>
+            📚
+          </div>
           <p className="mb-0">No published exams yet. Check back later.</p>
         </div>
       )}
       <div className="exam-grid">
         {exams.map((exam) => (
-          <article key={exam._id} className="exam-card">
-            <h2>{exam.title}</h2>
-            <p className="exam-card__desc">{exam.description || 'No description provided.'}</p>
+          <article key={exam._id} className={`exam-card ${subjectClass(exam.title)}`}>
+            <div className="exam-card__body">
+              <div className="exam-card__icon" aria-hidden>
+                {subjectIcon(exam.title)}
+              </div>
+              <h2>{exam.title}</h2>
+              <p className="exam-card__desc">{exam.description || 'No description provided.'}</p>
+            </div>
             <div className="exam-card__footer">
               <span className="meta-pill">⏱ {exam.durationMinutes} min</span>
               <Link to={`/student/exam/${exam._id}/take`} className="btn">

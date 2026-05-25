@@ -108,9 +108,10 @@ export default function TakeExam() {
       {error && <p className="error">{error}</p>}
 
       {questions.map((q, idx) => (
-        <div key={q._id} className="card card--flat question-block">
+        <div key={q._id} className="question-block">
           <p className="q-title">
-            {idx + 1}. {q.questionText}
+            <span className="q-num">{idx + 1}</span>
+            {q.questionText}
           </p>
           {q.options.map((opt, i) => (
             <label key={i} className="option">

@@ -29,7 +29,9 @@ export default function App() {
             path="/student"
             element={
               <PrivateRoute role="student">
-                <StudentDashboard />
+                <div className="content-panel">
+                  <StudentDashboard />
+                </div>
               </PrivateRoute>
             }
           />
@@ -37,7 +39,9 @@ export default function App() {
             path="/student/results"
             element={
               <PrivateRoute role="student">
-                <StudentResults />
+                <div className="content-panel">
+                  <StudentResults />
+                </div>
               </PrivateRoute>
             }
           />
@@ -45,7 +49,9 @@ export default function App() {
             path="/student/exam/:examId/take"
             element={
               <PrivateRoute role="student">
-                <TakeExam />
+                <div className="content-panel">
+                  <TakeExam />
+                </div>
               </PrivateRoute>
             }
           />
@@ -53,7 +59,9 @@ export default function App() {
             path="/student/result/:attemptId"
             element={
               <PrivateRoute role="student">
-                <ExamResult />
+                <div className="content-panel">
+                  <ExamResult />
+                </div>
               </PrivateRoute>
             }
           />
@@ -62,7 +70,9 @@ export default function App() {
             path="/admin"
             element={
               <PrivateRoute role="admin">
-                <AdminDashboard />
+                <div className="content-panel">
+                  <AdminDashboard />
+                </div>
               </PrivateRoute>
             }
           />
@@ -70,7 +80,9 @@ export default function App() {
             path="/admin/exams/new"
             element={
               <PrivateRoute role="admin">
-                <CreateExam />
+                <div className="content-panel">
+                  <CreateExam />
+                </div>
               </PrivateRoute>
             }
           />
@@ -78,7 +90,9 @@ export default function App() {
             path="/admin/exams/:id/edit"
             element={
               <PrivateRoute role="admin">
-                <CreateExam />
+                <div className="content-panel">
+                  <CreateExam />
+                </div>
               </PrivateRoute>
             }
           />
@@ -86,7 +100,9 @@ export default function App() {
             path="/admin/exams/:examId/questions"
             element={
               <PrivateRoute role="admin">
-                <ExamQuestions />
+                <div className="content-panel">
+                  <ExamQuestions />
+                </div>
               </PrivateRoute>
             }
           />
@@ -94,7 +110,9 @@ export default function App() {
             path="/admin/exams/:examId/results"
             element={
               <PrivateRoute role="admin">
-                <AdminExamResults />
+                <div className="content-panel">
+                  <AdminExamResults />
+                </div>
               </PrivateRoute>
             }
           />
@@ -102,6 +120,9 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
+      <footer className="app-footer">
+        <strong>EvoTest</strong> — Premium online examination platform
+      </footer>
     </>
   );
 }

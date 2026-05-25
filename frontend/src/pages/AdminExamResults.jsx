@@ -28,63 +28,69 @@ export default function AdminExamResults() {
 
   if (loading) {
     return (
-      <div className="container" style={{ padding: '2rem 0' }}>
+      <div className="container">
         <div className="loading-state">Loading student results…</div>
       </div>
     );
   }
 
   return (
-    <div className="container" style={{ padding: '2rem 1rem' }}>
-      <header className="page-header" style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div>
+    <div className="container">
+      <div className="admin-toolbar">
+        <header className="page-header" style={{ marginBottom: 0 }}>
           <h1>Results: {examTitle || 'Exam'}</h1>
           <p className="page-header__subtitle">View all student scores for this exam.</p>
-        </div>
-        <Link to="/admin" className="btn secondary">Back to Dashboard</Link>
-      </header>
+        </header>
+        <Link to="/admin" className="btn secondary">
+          Back to Dashboard
+        </Link>
+      </div>
 
       {error ? (
         <p className="error">{error}</p>
       ) : results.length === 0 ? (
         <div className="empty-state">
+          <div className="empty-state__icon" aria-hidden>
+            👥
+          </div>
           <p>No students have completed this exam yet.</p>
         </div>
       ) : (
-        <div className="card" style={{ overflow: 'hidden' }}>
-          <table className="table" style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-            <thead style={{ backgroundColor: '#f9f9fb', borderBottom: '1px solid #e2e8f0' }}>
-              <tr>
-                <th style={{ padding: '1rem', fontWeight: 600, color: '#475569' }}>Student Name</th>
-                <th style={{ padding: '1rem', fontWeight: 600, color: '#475569' }}>Email</th>
-                <th style={{ padding: '1rem', fontWeight: 600, color: '#475569' }}>Score</th>
-                <th style={{ padding: '1rem', fontWeight: 600, color: '#475569' }}>Percentage</th>
-                <th style={{ padding: '1rem', fontWeight: 600, color: '#475569' }}>Submitted At</th>
-              </tr>
-            </thead>
-            <tbody>
-              {results.map((res) => (
-                <tr key={res._id} style={{ borderBottom: '1px solid #e2e8f0' }}>
-                  <td style={{ padding: '1rem', fontWeight: 500, color: '#1e293b' }}>{res.studentName}</td>
-                  <td style={{ padding: '1rem', color: '#64748b' }}>{res.studentEmail}</td>
-                  <td style={{ padding: '1rem', fontWeight: 500 }}>
-                    {res.score} / {res.totalQuestions}
-                  </td>
-                  <td style={{ padding: '1rem' }}>
-                    <span
-                      className={`badge ${res.percentage >= 50 ? 'badge--success' : 'badge--warning'}`}
-                      style={{ fontSize: '0.85rem' }}
-                    >
-                      {res.percentage}%
-                    </span>
-                  </td>
-                  <td style={{ padding: '1rem', color: '#64748b', fontSize: '0.9rem' }}>
-                    {new Date(res.submittedAt).toLocaleString()}
-                  </td>
+        <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+          <div className="table-wrap">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Email</th>
+                  <th>Score</th>
+                  <th>Percentage</th>
+                  <th>Submitted At</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {results.map((res) => (
+                  <tr key={res._id}>
+                    <td style={{ fontWeight: 600 }}>{res.studentName}</td>
+                    <td className="text-muted">{res.studentEmail}</td>
+                    <td style={{ fontWeight: 600 }}>
+                      {res.score} / {res.totalQuestions}
+                    </td>
+                    <td>
+                      <span
+                        className={`badge ${res.percentage >= 50 ? 'badge--success' : 'badge--warning'}`}
+                      >
+                        {res.percentage}%
+                      </span>
+                    </td>
+                    <td className="text-muted" style={{ fontSize: '0.9rem' }}>
+                      {new Date(res.submittedAt).toLocaleString()}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>
