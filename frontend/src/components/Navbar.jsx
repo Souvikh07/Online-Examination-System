@@ -2,7 +2,10 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 
 export default function Navbar() {
-  const { user, logout, isAdmin, isStudent } = useAuth();
+  const { user, logout, isAdmin, isStudent, ready } = useAuth();
+
+  const displayName = user?.name || user?.email || 'User';
+  const roleLabel = user?.role === 'admin' ? 'Admin' : user?.role === 'student' ? 'Student' : user?.role;
 
   return (
     <header className="nav">
@@ -11,28 +14,30 @@ export default function Navbar() {
         <span className="nav-brand__text">EvoTest</span>
       </Link>
       <nav className="nav-links" aria-label="Main">
-        {!user && (
+        {!ready && <span className="nav-loading">…</span>}
+        {ready && !user && (
           <>
             <Link to="/login">Student login</Link>
             <Link to="/register">Sign up</Link>
             <Link to="/admin/login">Admin</Link>
           </>
         )}
-        {isStudent && (
+        {ready && isStudent && (
           <>
             <Link to="/student">My exams</Link>
             <Link to="/student/results">Results</Link>
           </>
         )}
-        {isAdmin && <Link to="/admin">Dashboard</Link>}
-        {user && (
-          <span className="nav-user">
-            <span>{user.name}</span>
-            <span className="badge">{user.role}</span>
+        {ready && isAdmin && <Link to="/admin">Dashboard</Link>}
+        {ready && user && (
+          <div className="nav-user" title={`Logged in as ${displayName}`}>
+            <span className="nav-user__label">Signed in as</span>
+            <span className="nav-user__name">{displayName}</span>
+            <span className="badge">{roleLabel}</span>
             <button type="button" className="btn secondary btn--sm" onClick={logout}>
               Log out
             </button>
-          </span>
+          </div>
         )}
       </nav>
     </header>

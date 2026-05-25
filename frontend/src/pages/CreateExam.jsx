@@ -52,11 +52,11 @@ export default function CreateExam() {
   };
 
   return (
-    <div className="container">
+    <div className="container container--form">
       <Link to="/admin" className="link-back">
         ← Back to dashboard
       </Link>
-      <div className="card card--interactive auth-card" style={{ maxWidth: 560 }}>
+      <div className="card card--interactive auth-card">
         <h1 style={{ marginTop: 0 }}>{isEdit ? 'Edit exam' : 'Create exam'}</h1>
         <p className="auth-lead" style={{ marginBottom: '1.25rem' }}>
           {isEdit ? 'Update details and visibility.' : 'Set duration and optional description. You can add questions next.'}

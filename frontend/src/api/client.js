@@ -5,4 +5,19 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
+api.interceptors.request.use((config) => {
+  try {
+    const raw = localStorage.getItem('online_exam_auth');
+    if (raw) {
+      const { token } = JSON.parse(raw);
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    }
+  } catch {
+    /* ignore */
+  }
+  return config;
+});
+
 export default api;

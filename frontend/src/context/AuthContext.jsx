@@ -5,40 +5,38 @@ const AuthContext = createContext(null);
 
 const STORAGE_KEY = 'online_exam_auth';
 
+function normalizeUser(payload) {
+  if (!payload) return null;
+  const id = payload._id || payload.id;
+  const name = payload.name?.trim?.() || payload.name || '';
+  const email = payload.email || '';
+  const role = payload.role;
+  if (!id || !role) return null;
+  return { _id: id, name: name || email.split('@')[0] || 'User', email, role };
+}
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [ready, setReady] = useState(false);
 
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        if (parsed?.token && parsed?.user) {
-          setToken(parsed.token);
-          setUser(parsed.user);
-          api.defaults.headers.common.Authorization = `Bearer ${parsed.token}`;
-        }
-      }
-    } catch {
-      localStorage.removeItem(STORAGE_KEY);
+  const persist = (t, u) => {
+    if (t && u) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ token: t, user: u }));
+      api.defaults.headers.common.Authorization = `Bearer ${t}`;
     }
-    setReady(true);
-  }, []);
+  };
 
   const login = (payload) => {
-    const { token: t, ...rest } = payload;
-    const u = {
-      _id: rest._id,
-      name: rest.name,
-      email: rest.email,
-      role: rest.role,
-    };
+    const t = payload?.token || payload?.accessToken;
+    const u = normalizeUser(payload);
+    if (!t || !u) {
+      console.error('Invalid login response', payload);
+      return;
+    }
     setToken(t);
     setUser(u);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ token: t, user: u }));
-    api.defaults.headers.common.Authorization = `Bearer ${t}`;
+    persist(t, u);
   };
 
   const logout = () => {
@@ -47,6 +45,51 @@ export function AuthProvider({ children }) {
     delete api.defaults.headers.common.Authorization;
     localStorage.removeItem(STORAGE_KEY);
   };
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const init = async () => {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+
+        const parsed = JSON.parse(raw);
+        const t = parsed?.token;
+        const storedUser = normalizeUser(parsed?.user);
+
+        if (!t || !storedUser) {
+          localStorage.removeItem(STORAGE_KEY);
+          return;
+        }
+
+        setToken(t);
+        setUser(storedUser);
+        api.defaults.headers.common.Authorization = `Bearer ${t}`;
+
+        try {
+          const { data } = await api.get('/auth/me');
+          if (cancelled) return;
+          const fresh = normalizeUser(data);
+          if (fresh) {
+            setUser(fresh);
+            persist(t, fresh);
+          }
+        } catch {
+          if (!cancelled) logout();
+        }
+      } catch {
+        localStorage.removeItem(STORAGE_KEY);
+      } finally {
+        if (!cancelled) setReady(true);
+      }
+    };
+
+    init();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const value = useMemo(
     () => ({
